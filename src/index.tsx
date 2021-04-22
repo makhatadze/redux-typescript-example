@@ -1,10 +1,18 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 
+interface AppProps {
+    color: string
+}
+
+class App extends Component<AppProps> {
+    render() {
+        return <div>{this.props.color}</div>;
+    }
+}
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App color={'green'} />
   </React.StrictMode>,
   document.getElementById('root')
 );
