@@ -1,10 +1,41 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
+import {fetchTodos, Todo} from "../actions";
+import {StoreState} from "../reducers";
 
-export class App extends Component<any, any> {
-    render() {
-        return <h1>App</h1>;
-    }
+interface AppProps {
+    todos: Todo[];
+    fetchTodos(): any
 }
 
 
-export default App;
+export class App extends Component<AppProps> {
+    onButtonClick =  (): void => {
+        this.props.fetchTodos();
+    };
+
+    renderList(): JSX.Element[] {
+        return  this.props.todos.map((todo: Todo) => (
+            <div key={todo.id}>
+                {todo.title}
+            </div>
+        ))
+    }
+    render() {
+        return <h1>
+            <button onClick={this.onButtonClick}>Fetch</button>
+            {this.renderList()}
+        </h1>;
+    }
+}
+
+const mapStateToProps = ({todos}: StoreState): { todos: Todo[] } => {
+    return {todos}
+}
+
+export default connect(
+    mapStateToProps,
+    {
+        fetchTodos
+    }
+)(App);
