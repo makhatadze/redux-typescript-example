@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import {createStore, applyMiddleware} from "redux";
+import {Provider} from "react-redux";
+import thunk from "redux-thunk";
 
-interface AppProps {
-    color?: string;
-}
-
-const App = (props: AppProps): JSX.Element => {
-    return (
-        <h1>{props.color}</h1>
-    )
-};
-
+const store = createStore(reducers, applyMiddleware(thunk));
 
 ReactDOM.render(
     <React.StrictMode>
-        <App color={'green'}/>
+        <Provider store={store}>
+            <App color={'green'}/>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );
